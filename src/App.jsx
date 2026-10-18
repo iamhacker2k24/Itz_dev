@@ -9,8 +9,8 @@ import DevAI from "./components/dev_ai";
 
 function App() {
   return (
-    <div className="bg-white dark:bg-black text-black dark:text-white transition-all duration-300 px-4 sm:px-6 lg:px-8">
-       <Navbar />
+    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white transition-colors duration-400 overflow-x-hidden selection:bg-orange-500 selection:text-white">
+      <Navbar />
       <Hero />
       <About /> 
       <Services />

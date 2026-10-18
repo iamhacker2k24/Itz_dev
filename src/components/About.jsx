@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import daraData from "../data/dara.json";
 
 import {
   Globe,
@@ -7,33 +8,22 @@ import {
   Bot,
 } from "lucide-react";
 
+const iconMap = {
+  Globe: <Globe size={28} />,
+  MonitorSmartphone: <MonitorSmartphone size={28} />,
+  Cpu: <Cpu size={28} />,
+  Bot: <Bot size={28} />,
+};
+
 const About = () => {
-  const skills = [
-    {
-      name: "MERN Stack",
-      percent: 90,
-      icon: <Globe size={30} />,
-    },
-    {
-      name: "UI / UX",
-      percent: 85,
-      icon: <MonitorSmartphone size={30} />,
-    },
-    {
-      name: "IoT",
-      percent: 80,
-      icon: <Cpu size={30} />,
-    },
-    {
-      name: "Gen AI",
-      percent: 75,
-      icon: <Bot size={30} />,
-    },
+  const skills = daraData.skills || [
+    { name: "MERN Stack", percent: 90, icon: "Globe" },
+    { name: "UI / UX", percent: 85, icon: "MonitorSmartphone" },
+    { name: "IoT", percent: 80, icon: "Cpu" },
+    { name: "Gen AI", percent: 75, icon: "Bot" },
   ];
 
-  const [progress, setProgress] = useState(
-    skills.map(() => 0)
-  );
+  const [progress, setProgress] = useState(skills.map(() => 0));
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -48,152 +38,84 @@ const About = () => {
     }, 20);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [skills]);
 
   return (
     <section
       id="about"
-      className="
-        relative
-        overflow-hidden
-        py-20
-        sm:py-28
-        px-4
-        sm:px-6
-        lg:px-12
-        bg-white
-        dark:bg-[#0a0a0a]
-        transition-colors
-        duration-500
-      "
+      className="relative overflow-hidden py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-[#0a0a0a] transition-colors duration-400"
     >
-      {/* BACKGROUND */}
-
-      <div className="absolute inset-0 -z-10 pointer-events-none">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-125 bg-orange-400/10 blur-[120px] rounded-full"></div>
-
-        <div className="absolute bottom-0 left-0 w-87.5 h-87.5 bg-amber-300/10 blur-[100px] rounded-full"></div>
-
-        <div className="absolute top-40 right-0 w-75 h-75 bg-yellow-300/10 blur-[100px] rounded-full"></div>
+      {/* BACKGROUND GLOW */}
+      <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 sm:w-96 sm:h-96 md:w-[500px] md:h-[500px] bg-orange-400/10 blur-[100px] rounded-full"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 sm:w-80 sm:h-80 bg-amber-300/10 blur-[90px] rounded-full"></div>
+        <div className="absolute top-40 right-0 w-64 h-64 sm:w-80 sm:h-80 bg-yellow-300/10 blur-[90px] rounded-full"></div>
       </div>
 
       <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* LEFT */}
+        {/* CENTERED HEADER */}
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+          <p className="text-orange-500 font-semibold tracking-[0.25em] text-xs sm:text-sm uppercase mb-3">
+            About Me
+          </p>
 
-          <div>
-            <p className="text-orange-500 font-semibold tracking-[0.3em] uppercase mb-4">
-              About Me
-            </p>
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold leading-tight text-gray-900 dark:text-white mb-4 sm:mb-6">
+            Skills And Tools <br className="hidden sm:inline" />
+            <span className="text-orange-500">That I Master</span>
+          </h2>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-gray-900 dark:text-white mb-6">
-              Skills And Tools <br />
+          <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base lg:text-lg leading-relaxed max-w-2xl mx-auto">
+            Passionate about building modern web applications, intelligent AI systems,
+            responsive UI/UX designs, and innovative IoT-based solutions.
+            <br />
+            I enjoy creating scalable digital experiences with modern technologies and
+            user-focused design principles.
+          </p>
+        </div>
 
-              <span className="text-orange-500">
-                That I Master
-              </span>
-            </h2>
-
-            <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg leading-8 max-w-xl">
-              Passionate about building modern web applications,
-              intelligent AI systems, responsive UI/UX designs,
-              and innovative IoT-based solutions.
-
-              <br />
-              <br />
-
-              I enjoy creating scalable digital experiences with
-              modern technologies and user-focused design
-              principles.
-            </p>
-          </div>
-
-          {/* RIGHT */}
-
-          <div className="grid grid-cols-2 gap-6 sm:gap-8 place-items-center">
-            {skills.map((skill, index) => (
+        {/* CENTERED SKILLS GRID */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-8 max-w-5xl mx-auto place-items-center">
+          {skills.map((skill, index) => {
+            const Icon = iconMap[skill.icon] || <Globe size={28} />;
+            return (
               <div
                 key={index}
-                className="
-                  relative
-                  w-36
-                  h-36
-                  sm:w-44
-                  sm:h-44
-                  lg:w-52
-                  lg:h-52
-                  flex
-                  items-center
-                  justify-center
-                  hover:scale-105
-                  active:scale-95
-                  transition-all
-                  duration-500
-                "
+                className="relative w-36 h-36 sm:w-44 sm:h-44 lg:w-48 lg:h-48 flex items-center justify-center hover:scale-105 active:scale-95 transition-all duration-300 group"
               >
                 {/* PROGRESS RING */}
-
                 <div
-                  className="absolute inset-0 rounded-full transition-all duration-500"
+                  className="absolute inset-0 rounded-full transition-all duration-500 shadow-md"
                   style={{
                     background: `conic-gradient(
-                      #ff8c32 ${progress[index] * 3.6}deg,
-                      rgba(180,180,180,0.15) 0deg
+                      #f97316 ${progress[index] * 3.6}deg,
+                      rgba(160, 160, 160, 0.15) 0deg
                     )`,
                   }}
                 ></div>
 
                 {/* GLOW */}
+                <div className="absolute w-full h-full rounded-full bg-orange-500/10 blur-xl group-hover:bg-orange-500/20 transition-all"></div>
 
-                <div className="absolute w-full h-full rounded-full bg-orange-500/10 blur-2xl"></div>
-
-                {/* INNER */}
-
-                <div
-                  className="
-                    relative
-                    z-10
-                    w-28
-                    h-28
-                    sm:w-36
-                    sm:h-36
-                    lg:w-40
-                    lg:h-40
-                    rounded-full
-                    bg-white
-                    dark:bg-[#0a0a0a]
-                    border
-                    border-black/10
-                    dark:border-white/10
-                    flex
-                    flex-col
-                    items-center
-                    justify-center
-                    shadow-xl
-                    backdrop-blur-xl
-                  "
-                >
+                {/* INNER CIRCLE */}
+                <div className="relative z-10 w-28 h-28 sm:w-34 sm:h-34 lg:w-38 lg:h-38 rounded-full bg-white dark:bg-[#121214] border border-black/10 dark:border-white/10 flex flex-col items-center justify-center shadow-lg transition-colors p-2">
                   {/* ICON */}
-
-                  <div className="text-orange-500 mb-2 sm:mb-3">
-                    {skill.icon}
+                  <div className="text-orange-500 mb-1 transform group-hover:scale-110 transition-transform">
+                    {Icon}
                   </div>
 
                   {/* TITLE */}
-
-                  <h3 className="text-sm sm:text-lg font-semibold text-gray-900 dark:text-white text-center">
+                  <h3 className="text-xs sm:text-sm font-bold text-gray-900 dark:text-white text-center leading-tight">
                     {skill.name}
                   </h3>
 
                   {/* PERCENT */}
-
-                  <p className="text-orange-500 text-sm sm:text-base font-bold mt-1">
-                    {/* {progress[index]}% */}
-                  </p>
+                  <span className="text-orange-500 text-xs sm:text-sm font-extrabold mt-0.5">
+                    {progress[index]}%
+                  </span>
                 </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>

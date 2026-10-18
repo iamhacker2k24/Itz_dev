@@ -4,6 +4,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 /* Hide global scrollbar for Chrome, Safari, Edge */
@@ -49,13 +50,29 @@ body {
   margin: 0;
   padding: 0;
   background-color: #ffffff;
-  color: #000000;
-  transition: background-color 0.5s ease, color 0.5s ease;
+  color: #0f172a;
+  overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 html.dark body {
-  background-color: #000000;
-  color: #ffffff;
+  background-color: #0a0a0a;
+  color: #f8fafc;
+}
+
+/* Corner-to-corner circular view transition for Day / Night mode */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
 }
 
 @keyframes float {

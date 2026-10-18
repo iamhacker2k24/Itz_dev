@@ -1,0 +1,46 @@
+{
+  "skills": [
+    {
+      "name": "MERN Stack",
+      "percent": 90,
+      "icon": "Globe"
+    },
+    {
+      "name": "UI / UX",
+      "percent": 85,
+      "icon": "MonitorSmartphone"
+    },
+    {
+      "name": "IoT",
+      "percent": 80,
+      "icon": "Cpu"
+    },
+    {
+      "name": "Gen AI",
+      "percent": 75,
+      "icon": "Bot"
+    }
+  ],
+  "services": [
+    {
+      "title": "Website Development",
+      "description": "I create responsive, fast, and modern websites with smooth user experiences.",
+      "icon": "Globe"
+    },
+    {
+      "title": "Mobile Apps",
+      "description": "Modern mobile applications with clean UI and powerful functionality.",
+      "icon": "Smartphone"
+    },
+    {
+      "title": "IoT Solutions",
+      "description": "Smart IoT systems for automation and real-time connected experiences.",
+      "icon": "Cpu"
+    },
+    {
+      "title": "UI / UX Design",
+      "description": "Beautiful user interfaces focused on modern user experience.",
+      "icon": "Palette"
+    }
+  ]
+}
