@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
-import daraData from "../data/dara.json";
+import daraData from "../data/data.json";
 
-import {
-  Globe,
-  MonitorSmartphone,
-  Cpu,
-  Bot,
-} from "lucide-react";
+import { Globe, MonitorSmartphone, Cpu, Bot } from "lucide-react";
 
 const iconMap = {
   Globe: <Globe size={28} />,
@@ -33,7 +28,7 @@ const About = () => {
             return value + 1;
           }
           return value;
-        })
+        }),
       );
     }, 20);
 
@@ -65,11 +60,11 @@ const About = () => {
           </h2>
 
           <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base lg:text-lg leading-relaxed max-w-2xl mx-auto">
-            Passionate about building modern web applications, intelligent AI systems,
-            responsive UI/UX designs, and innovative IoT-based solutions.
-            <br />
-            I enjoy creating scalable digital experiences with modern technologies and
-            user-focused design principles.
+            Passionate about building modern web applications, intelligent AI
+            systems, responsive UI/UX designs, and innovative IoT-based
+            solutions.
+            <br />I enjoy creating scalable digital experiences with modern
+            technologies and user-focused design principles.
           </p>
         </div>
 

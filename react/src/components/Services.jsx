@@ -1,12 +1,7 @@
 import React from "react";
-import daraData from "../data/dara.json";
+import daraData from "../data/data.json";
 
-import {
-  Globe,
-  Smartphone,
-  Cpu,
-  Palette,
-} from "lucide-react";
+import { Globe, Smartphone, Cpu, Palette } from "lucide-react";
 
 const iconMap = {
   Globe: <Globe size={28} />,
@@ -41,8 +36,8 @@ const Services = () => {
           </h2>
 
           <p className="text-gray-600 dark:text-gray-400 mt-4 sm:mt-6 text-sm sm:text-base leading-relaxed">
-            Modern websites, mobile apps, IoT systems, and UI/UX
-            experiences with clean and responsive designs.
+            Modern websites, mobile apps, IoT systems, and UI/UX experiences
+            with clean and responsive designs.
           </p>
         </div>
 
