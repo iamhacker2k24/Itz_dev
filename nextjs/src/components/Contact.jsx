@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import emailjs from "@emailjs/browser";
 import {
   Mail,
   Send,
@@ -11,12 +10,6 @@ import {
   CheckCircle2,
   XCircle,
 } from "lucide-react";
-
-/* ENV with Next.js and fallback support */
-const tempOne = process.env.NEXT_PUBLIC_TEMP_ONE || "template_v7eqpcy";
-const tempTwo = process.env.NEXT_PUBLIC_TEMP_TWO || "template_wu2xe9n";
-const serviceOne = process.env.NEXT_PUBLIC_SERVCES_ONE || "service_jd4ktpq";
-const serviceTwo = process.env.NEXT_PUBLIC_SERVCES_TWO || "service_jd4ktpq";
 
 function Contact() {
   const [loading, setLoading] = useState(false);
@@ -55,55 +48,45 @@ function Contact() {
         type: "",
         message: "",
       });
-    }, 3000);
+    }, 3500);
   };
 
-  /* SUBMIT */
+  /* SUBMIT VIA RESEND API */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      /* SEND TO YOU */
-      await emailjs.send(
-        serviceOne,
-        tempOne,
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          message: formData.message,
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        "wkJCuBsMxji_ZiOwQ"
-      );
+        body: JSON.stringify(formData),
+      });
 
-      /* AUTO REPLY */
-      await emailjs.send(
-        serviceTwo,
-        tempTwo,
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          message: formData.message,
-        },
-        "wkJCuBsMxji_ZiOwQ"
-      );
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Failed to send message");
+      }
 
       /* SUCCESS */
       showToast("success", "Message Sent Successfully!");
 
-      /* RESET */
+      /* RESET FORM */
       setFormData({
         name: "",
         email: "",
         message: "",
       });
     } catch (error) {
-      console.error(error);
+      console.error("Submission error:", error);
       /* ERROR */
-      showToast("error", "Failed To Send Message");
+      showToast("error", error.message || "Failed To Send Message");
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
