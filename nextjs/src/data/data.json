@@ -2,7 +2,7 @@
   "skills": [
     {
       "name": "MERN Stack",
-      "percent": 90,
+    
       "icon": "Globe"
     },
     {
@@ -12,12 +12,12 @@
     },
     {
       "name": "IoT",
-      "percent": 80,
+      
       "icon": "Cpu"
     },
     {
       "name": "Gen AI",
-      "percent": 75,
+      
       "icon": "Bot"
     }
   ],
