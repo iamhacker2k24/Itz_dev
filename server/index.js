@@ -26,7 +26,7 @@ app.post("/api/ai/chat", async (req, res) => {
         const { ques } = req.body;
         console.log(ques);
         const response = await chat(ques);
-        console.log(res)
+        // console.log(response)
         res.status(200).json({
             success: true,
             msg: response
