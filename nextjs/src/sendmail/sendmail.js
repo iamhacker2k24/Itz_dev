@@ -1,28 +1,23 @@
+import { EmailTemplate } from '../../../components/email-template';
 import { Resend } from 'resend';
-import { adminEmailHtml } from './adminmail';
-import { userEmailHtml } from './usermail';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export async function sendContactEmail({ name, email, message }) {
-  const adminResult = await resend.emails.send({
-    from: 'Portfolio Contact <onboarding@resend.dev>',
-    to: ['help.devapps@gmail.com'],
-    replyTo: email,
-    subject: `New Message from ${name} - Portfolio`,
-    html: adminEmailHtml({ name, email, message }),
-  });
+export async function POST() {
+    try {
+        const { data, error } = await resend.emails.send({
+            from: 'Acme <onboarding@resend.dev>',
+            to: ['delivered@resend.dev'],
+            subject: 'Hello world',
+            react: EmailTemplate({ firstName: 'John' }),
+        });
 
-  try {
-    await resend.emails.send({
-      from: 'Debabrata Paul <onboarding@resend.dev>',
-      to: [email],
-      subject: 'Thank you for reaching out - Debabrata Paul',
-      html: userEmailHtml({ name, message }),
-    });
-  } catch (err) {
-    console.warn('Auto-reply to visitor skipped:', err?.message);
-  }
+        if (error) {
+            return Response.json({ error }, { status: 500 });
+        }
 
-  return adminResult;
+        return Response.json(data);
+    } catch (error) {
+        return Response.json({ error }, { status: 500 });
+    }
 }

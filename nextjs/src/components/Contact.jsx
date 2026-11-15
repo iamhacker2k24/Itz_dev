@@ -51,13 +51,13 @@ function Contact() {
     }, 3500);
   };
 
-  /* SUBMIT VIA RESEND API */
+  /* SUBMIT */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const res = await fetch("/api/contact", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -65,25 +65,21 @@ function Contact() {
         body: JSON.stringify(formData),
       });
 
-      const data = await res.json();
+      const data = await response.json();
 
-      if (!res.ok || !data.success) {
-        throw new Error(data.error || "Failed to send message");
+      if (response.ok && data.success) {
+        showToast("success", data.message || "Message Sent Successfully!");
+        setFormData({
+          name: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        showToast("error", data.message || "Failed To Send Message");
       }
-
-      /* SUCCESS */
-      showToast("success", "Message Sent Successfully!");
-
-      /* RESET FORM */
-      setFormData({
-        name: "",
-        email: "",
-        message: "",
-      });
     } catch (error) {
-      console.error("Submission error:", error);
-      /* ERROR */
-      showToast("error", error.message || "Failed To Send Message");
+      console.error("Contact submit error:", error);
+      showToast("error", "Failed To Send Message. Please try again.");
     } finally {
       setLoading(false);
     }
