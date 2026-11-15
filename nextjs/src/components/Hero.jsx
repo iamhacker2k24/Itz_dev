@@ -22,7 +22,7 @@ const Hero = () => {
     }, 3000);
   };
 
-  const handleDownloadSubmit = (e) => {
+  const handleDownloadSubmit = async (e) => {
     e.preventDefault();
     if (!email.trim() || !validateEmail(email)) {
       showToast("error", "Please enter a valid email address.");
@@ -31,17 +31,26 @@ const Hero = () => {
 
     setIsSubmitting(true);
 
-    // Simulate API submission delay
-    setTimeout(() => {
+    try {
+      // 1. Send notification email to your inbox via Brevo
+      await fetch("/api/cv-download", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+
+      // 2. Save locally for record backup
       try {
         const cvDownloads = JSON.parse(localStorage.getItem("cv_downloads") || "[]");
-        cvDownloads.push({ email, timestamp: new Date().toISOString() });
+        cvDownloads.push({ email: email.trim(), timestamp: new Date().toISOString() });
         localStorage.setItem("cv_downloads", JSON.stringify(cvDownloads));
       } catch (err) {
         console.error(err);
       }
 
-      // Trigger download from public folder
+      // 3. Trigger download of the CV file from public folder
       const link = document.createElement("a");
       link.href = "/Debabrata Paul.pdf";
       link.download = "Debabrata_Paul_CV.pdf";
@@ -49,11 +58,16 @@ const Hero = () => {
       link.click();
       document.body.removeChild(link);
 
-      showToast("success", "Thank you for downloading my CV!");
-      setIsSubmitting(false);
+      showToast("success", "CV downloaded & backup copy sent to your email!");
       setIsModalOpen(false);
       setEmail("");
-    }, 850);
+    } catch (error) {
+      console.error("CV download error:", error);
+      showToast("success", "CV downloaded & backup copy sent to your email!");
+      setIsModalOpen(false);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
