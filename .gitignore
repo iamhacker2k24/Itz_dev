@@ -4,3 +4,8 @@ node_modules/
 .env
 .env.*
 !.env.example
+
+
+
+# here store all hosting  urls ok 
+.hosting
